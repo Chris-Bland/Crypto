@@ -1,15 +1,10 @@
-import React from 'react';
+import React from 'react'
+import CircularProgress from 'material-ui/CircularProgress'
 
-/*
- * A reusable loading component
- */
-
-const Loading = () => (
-  <div className="Loading">
-    <div className="Loading-bounce Loading-bounce--1" />
-    <div className="Loading-bounce Loading-bounce--2" />
-    <div className="Loading-bounce Loading-bounce--3" />
+const Loading = ({ children }) => (
+  <div className='flexes flex-column justify-center align-center loading'>
+    <CircularProgress />
   </div>
-);
+)
 
-export default Loading;
+export default Loading

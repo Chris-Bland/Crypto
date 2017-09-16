@@ -1,36 +1,31 @@
-import { Random } from 'meteor/random';
+import Bitcoin from './connectors';
 
-export const typeDefs = [
-  `
-type Email {
-  address: String
-  verified: Boolean
-}
+export const typeDefs = [`
+  type Bitcoin {
+    price: Int
+    averagePrice: Int
+    inputTime: Int
+    percentChange: Float
+  }
 
-type User {
-  emails: [Email]
-  randomString: String
-  _id: String
-}
+  type RootQuery {
+    bitcoin(inputTime: Int!): Bitcoin
+  }
 
-type Query {
-  user: User
-}
+   schema {
+    query: RootQuery
+  }
 `,
 ];
 
 export const resolvers = {
-  Query: {
-    user(root, args, context) {
-      /*
-       * We access to the current user here thanks to the context. The current
-       * user is added to the context thanks to the `meteor/apollo` package.
-       */
-      return context.user;
-    },
+  RootQuery: {
+    bitcoin: (root, args, context) => Bitcoin.getData(args)
   },
-  User: {
-    emails: ({ emails }) => emails,
-    randomString: () => Random.id(),
-  },
+  Bitcoin: {
+    price: ({ price }) => price,
+    averagePrice: ({ averagePrice }) => averagePrice,
+    inputTime: ({ inputTime }) => inputTime,
+    percentChange: ({ percentChange }) => percentChange,
+  }
 };
