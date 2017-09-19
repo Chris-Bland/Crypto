@@ -77,6 +77,7 @@ class App extends React.Component {
 
     return (
       <div className='app-container'>
+
         <AppBar
           title="Crypto Currencies"
           style={{ backgroundColor: "#1E88E5" }}
@@ -86,8 +87,9 @@ class App extends React.Component {
         <Bitcoin inputTimeOne={inputTimeOne} percentLimitOne={percentLimitOne} inputTimeTwo={inputTimeTwo} percentLimitTwo={percentLimitTwo} resetLimitOne={this.resetLimitOne} resetLimitTwo={this.resetLimitTwo} />
         <br />
         <div className='input-container'>
+        <h2>Alerts</h2>
           <div className='firstConditional conditionals'>
-            <p className="btcText"> If Bitcoin moves greater than </p>
+            <p className="btcText">1.) If Bitcoin moves more than </p>
             <div className="inputWrapper">
               <TextField
                 style={{ width: 'initial' }}
@@ -107,7 +109,7 @@ class App extends React.Component {
               />
             </div>
 
-            <p className="btcText">minutes, Condition Met.</p>
+            <p className="btcText">minutes</p>
             <RaisedButton style={style.button} backgroundColor="#1E88E5" onClick={this.setLimitOne}
               label="Set" />
             <RefreshIndicator
@@ -121,7 +123,7 @@ class App extends React.Component {
 
           </div>
           <div className='secondConditional conditionals'>
-            <p className="btcText"> If Bitcoin moves greater than </p>
+            <p className="btcText">2.) If Bitcoin moves more than </p>
             <div className="inputWrapper">
               <TextField
                 style={{ width: 'initial' }}
@@ -140,7 +142,7 @@ class App extends React.Component {
                 floatingLabelText="Minutes"
               />
             </div>
-            <p className="btcText">minutes, Condition Met.</p>
+            <p className="btcText">minutes</p>
             <RaisedButton style={style.button} backgroundColor="#1E88E5" onClick={this.setLimitTwo}
               label="Set" />
             <RefreshIndicator
