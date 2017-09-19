@@ -4,7 +4,7 @@ const btcClient = new gdax.PublicClient();
 
 const Bitcoin = {
 
-  async getData({ inputTime }) {
+  async getData({ inputTimeOne, inputTimeTwo }) {
 
     const ticker = await new Promise(function(resolve, reject) {
       btcClient.getProductTicker(function(err, res, data) {
@@ -25,30 +25,47 @@ const Bitcoin = {
             console.log('API Limit Reached.');
             return;
           } else {
-            let total = 0;
-            for (var i = 0; i < (inputTime); i++) {
-              total += (btcHistoric[i][1] + btcHistoric[i][2]) / 2;
+            let totalAverage = 0;
+            for (var i = 0; i < (60); i++) {
+              totalAverage += (btcHistoric[i][1] + btcHistoric[i][2]) / 2;
             }
-            let firstCandle = btcHistoric[(inputTime) - 1];
-            const openPrice = (firstCandle[1] + firstCandle[2]) / 2;  
-            const averagePrice = total / (inputTime);
+            const averagePrice = totalAverage / 60;
 
+            let totalOne = 0;
+            for (var i = 0; i < (inputTimeOne); i++) {
+              totalOne += (btcHistoric[i][1] + btcHistoric[i][2]) / 2;
+            }
+            let firstCandleOne = btcHistoric[(inputTimeOne) - 1];
+            const openPriceOne = (firstCandleOne[1] + firstCandleOne[2]) / 2;  
+
+
+            let totalTwo = 0;
+            for (var i = 0; i < (inputTimeTwo); i++) {
+              totalTwo += (btcHistoric[i][1] + btcHistoric[i][2]) / 2;
+            }
+            let firstCandleTwo = btcHistoric[(inputTimeOne) - 1];
+            const openPriceTwo = (firstCandleTwo[1] + firstCandleTwo[2]) / 2;  
+          
+      
             resolve({
               averagePrice,
-              percentChange: (ticker.price - openPrice) / ticker.price,
+              percentChangeOne: (ticker.price - openPriceOne) / ticker.price,
+              percentChangeTwo: (ticker.price - openPriceTwo) / ticker.price
             })
 
           }
       });
     })
 
-    const { averagePrice, percentChange } = historicRates;
+    const { averagePrice, percentChangeOne, percentChangeTwo } = historicRates;
 
     return {
       price: ticker.price,
       averagePrice,
-      inputTime,
-      percentChange,
+      inputTimeOne,
+      inputTimeTwo,
+      percentChangeOne,
+      percentChangeTwo,
     }
   }
 }

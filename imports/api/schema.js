@@ -4,12 +4,14 @@ export const typeDefs = [`
   type Bitcoin {
     price: Int
     averagePrice: Int
-    inputTime: Int
-    percentChange: Float
+    inputTimeOne: Int
+    inputTimeTwo: Int
+    percentChangeOne: Float
+    percentChangeTwo: Float
   }
 
   type RootQuery {
-    bitcoin(inputTime: Int!): Bitcoin
+    bitcoin(inputTimeOne: Int!, inputTimeTwo: Int!): Bitcoin
   }
 
    schema {
@@ -25,7 +27,9 @@ export const resolvers = {
   Bitcoin: {
     price: ({ price }) => price,
     averagePrice: ({ averagePrice }) => averagePrice,
-    inputTime: ({ inputTime }) => inputTime,
-    percentChange: ({ percentChange }) => percentChange,
+    inputTimeOne: ({ inputTimeOne }) => inputTimeOne,
+    percentChangeOne: ({ percentChangeOne }) => percentChangeOne,
+    inputTimeTwo: ({ inputTimeTwo }) => inputTimeTwo,
+    percentChangeTwo: ({ percentChangeTwo }) => percentChangeTwo,
   }
 };

@@ -15,30 +15,48 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      open: false
+      openOne: false,
+      openTwo: false
     }
 
-    this.handleOpen = this.handleOpen.bind(this)
-    this.handleClose = this.handleClose.bind(this)
+    this.handleOpenOne = this.handleOpenOne.bind(this)
+    this.handleCloseOne = this.handleCloseOne.bind(this)
+
+    this.handleOpenTwo = this.handleOpenTwo.bind(this)
+    this.handleCloseTwo = this.handleCloseTwo.bind(this)
   }
 
-  handleOpen() {
-    this.setState({ open: true });
+  handleOpenOne() {
+    this.setState({ openOne: true });
   };
 
-  handleClose() {
-    this.setState({ open: false });
-    this.props.resetLimits()
+  handleCloseOne() {
+    this.setState({ openOne: false });
+    this.props.resetLimitOne()
   };
+  handleOpenTwo() {
+    this.setState({ openTwo: true });
+  };
+
+  handleCloseTwo() {
+    this.setState({ openTwo: false });
+    this.props.resetLimitTwo()
+  };
+
 
 
   componentWillUpdate(nextProps, nextState) {
     if (!this.props.loading) {
-      const { percentChange } = this.props.bitcoin;
-      const { percentLimit } = nextProps;
+      const { percentChangeOne, percentChangeTwo } = this.props.bitcoin;
+      const { percentLimitOne, percentLimitTwo } = nextProps;
 
-      if (Math.abs(percentChange) >= Math.abs(percentLimit) && !this.state.open) {
-        this.setState({ open: true });
+      if (Math.abs(percentChangeOne) >= Math.abs(percentLimitOne) && !this.state.openOne) {
+        this.setState({ openOne: true });
+        console.log("CONDITION ONE MET");
+      }
+      if (Math.abs(percentChangeTwo) >= Math.abs(percentLimitTwo) && !this.state.openTwo) {
+        this.setState({ openTwo: true });
+        console.log('CONDITION TWO MET');
       }
     }
   }
@@ -46,44 +64,62 @@ class App extends React.Component {
   render() {
     if (this.props.loading) return (<Loading />)
 
-    const { averagePrice, inputTime, percentChange, price } = this.props.bitcoin;
-    const { percentLimit } = this.props
-    const movedColor = percentChange > 0 ? 'green' : 'red';
+    const { averagePrice, inputTimeOne, percentChangeOne, inputTimeTwo, percentChangeTwo, price } = this.props.bitcoin;
+    const { percentLimitOne, percentLimitTwo } = this.props
+    const movedColor = percentChangeOne > 0 ? 'green' : 'red';
 
-    const actions = [
+    const actionsOne = [
       <FlatButton
         label="Close"
         primary={true}
-        onClick={this.handleClose}
+        onClick={this.handleCloseOne}
+      />,
+    ];
+    const actionsTwo = [
+      <FlatButton
+        label="Close"
+        primary={true}
+        onClick={this.handleCloseTwo}
       />,
     ];
 
     return (
       <div className='bitcoin-container'>
-        <h1>Bitcoin</h1>
+        <div className="header">
+          <img className="btcGif" src="./btc.gif" alt="Bitcoin"  />
+          <h1>Bitcoin</h1>
+          <img className="btcGif" src="./btc.gif" alt="Bitcoin"  />
+        </div>
         <div className={`info-container ${movedColor}`}>
           <div className='info-item'>
             <div>Price</div>
             <div>{numeral(price).format('$0,0.00')}</div>
           </div>
           <div className='info-item'>
-            <div>Avg Price</div>
+            <div>Avg Price (60MINS)</div>
             <div>{numeral(averagePrice).format('$0,0.00')}</div>
           </div>
-          <div className='info-item'>
+          {/* <div className='info-item'>
             <div>Limit Set</div>
-            <div>{`${inputTime} mins`}</div>
-          </div>
-          <div className='info-item'>
+            <div>{`${inputTimeOne} mins`}</div>
+          </div> */}
+          {/* <div className='info-item'>
             <div>Percent Moved</div>
-            <div>{numeral(percentChange).format('0.00%')}</div>
-          </div>
+            <div>{numeral(percentChangeOne).format('0.00%')}</div>
+          </div> */}
         </div>
         <Dialog
-          title={`Your ${numeral(percentLimit).format('0.00%')} limit reached!`}
-          actions={actions}
+          title={`Condition One Has Met, BTC moved greater than: ${numeral(percentLimitOne).format('0.00%')}`}
+          actions={actionsOne}
           modal={true}
-          open={this.state.open}
+          open={this.state.openOne}
+        >
+        </Dialog>
+        <Dialog
+          title={`Condition Two Has Met, BTC moved greater than: ${numeral(percentLimitTwo).format('0.00%')}`}
+          actions={actionsTwo}
+          modal={true}
+          open={this.state.openTwo}
         >
         </Dialog>
       </div>
@@ -92,24 +128,28 @@ class App extends React.Component {
 }
 
 const getBitCoinData = gql`
-  query($inputTime: Int!) {
-    bitcoin(inputTime: $inputTime) {
+  query($inputTimeOne: Int!, $inputTimeTwo: Int!) {
+    bitcoin(inputTimeOne: $inputTimeOne, inputTimeTwo: $inputTimeTwo) {
       price
       averagePrice
-      inputTime
-      percentChange
+      inputTimeOne
+      inputTimeTwo
+      percentChangeOne
+      percentChangeTwo
     }
   }
 `;
 
 const withData = graphql(getBitCoinData, {
-  options: ({ inputTime }) => {
+  options: ({ inputTimeOne, inputTimeTwo }) => {
     return ({
-    pollInterval: 3000,
-    variables: {
-      inputTime,
-    },
-  })},
+      pollInterval: 3000,
+      variables: {
+        inputTimeOne,
+        inputTimeTwo
+      },
+    })
+  },
   props: ({ data: { bitcoin, error, loading, refetch } }) => {
     return {
       bitcoin,
