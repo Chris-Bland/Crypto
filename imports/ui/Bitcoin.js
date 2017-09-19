@@ -95,21 +95,21 @@ class App extends React.Component {
         </div>
         <div className={`info-container ${movedColor}`}>
           <div className='info-item'>
-            <div>Price</div>
+            <div className='btcTitle'>Price</div>
             <div>{numeral(price).format('$0,0.00')}</div>
           </div>
           <div className='info-item'>
-            <div>Avg Price (60MINS)</div>
+            <div className='btcTitle' >Avg Price (1 Hr)</div>
             <div>{numeral(averagePrice).format('$0,0.00')}</div>
           </div>
-          {/* <div className='info-item'>
-            <div>Limit Set</div>
+           {/* <div className='info-item'>
+            <div className='btcTitle' >Limit Set</div>
             <div>{`${inputTimeOne} mins`}</div>
-          </div> */}
-          {/* <div className='info-item'>
-            <div>Percent Moved</div>
+          </div>  */}
+          <div className='info-item'>
+            <div className='btcTitle'>Percent Moved</div>
             <div>{numeral(percentChangeOne).format('0.00%')}</div>
-          </div> */}
+          </div> 
         </div>
         <Dialog
           title={`Condition One Has Met, BTC moved greater than: ${numeral(percentLimitOne).format('0.00%')}`}

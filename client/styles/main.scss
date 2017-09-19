@@ -48,6 +48,8 @@ html, body {
   flex-wrap: wrap;
   justify-content: center; 
   margin: 0% 31%;
+  border-radius: 35px;
+  font-size: 1em;
 
   &.red {
     background-color: #F44336;
@@ -97,4 +99,7 @@ input{
     width: 4em;
     margin-left: 2em;
     margin-right: 2em;
+}
+.btcTitle {
+  font-weight:bold;
 }

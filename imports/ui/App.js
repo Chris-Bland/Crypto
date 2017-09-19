@@ -2,6 +2,7 @@ import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import AppBar from 'material-ui/AppBar';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 
 
@@ -17,7 +18,10 @@ class App extends React.Component {
       percentLimitOne: 100,
       inputTimeTwo: 5,
       percentLimitTwo: 100,
-      completed: 0,
+      refreshStatusOne: "ready",
+      refreshStatusTwo: "ready"
+
+
     }
 
     this.setLimitOne = this.setLimitOne.bind(this);
@@ -30,24 +34,28 @@ class App extends React.Component {
   setLimitOne() {
     this.setState({
       inputTimeOne: Number(this.refs.inputTimeOne.getValue()),
-      percentLimitOne: Number(this.refs.percentLimitOne.getValue()) / 100
+      percentLimitOne: Number(this.refs.percentLimitOne.getValue()) / 100,
+      refreshStatusOne: "loading"
     })
   }
   setLimitTwo() {
     this.setState({
       inputTimeTwo: Number(this.refs.inputTimeTwo.getValue()),
-      percentLimitTwo: Number(this.refs.percentLimitTwo.getValue()) / 100
+      percentLimitTwo: Number(this.refs.percentLimitTwo.getValue()) / 100,
+      refreshStatusTwo: "loading"
     })
   }
 
   resetLimitOne() {
     this.setState({
-      percentLimitOne: 100
+      percentLimitOne: 100,
+      refreshStatusOne: "ready"
     })
   }
   resetLimitTwo() {
     this.setState({
-      percentLimitTwo: 100
+      percentLimitTwo: 100,
+      refreshStatusTwo: "ready"
     })
   }
 
@@ -56,7 +64,10 @@ class App extends React.Component {
   render() {
     const { inputTimeOne, percentLimitOne, inputTimeTwo, percentLimitTwo } = this.state;
     const style = {
-      container: {
+      refresh: {
+        display: 'inline-block',
+        position: 'relative',
+        alignSelf: "center"
 
       },
       button: {
@@ -67,11 +78,11 @@ class App extends React.Component {
     return (
       <div className='app-container'>
         <AppBar
-          title="Crypto"
-          style={{backgroundColor: "#1E88E5"}}
-
+          title="Crypto Currencies"
+          style={{ backgroundColor: "#1E88E5" }}
           iconClassNameRight="muidocs-icon-navigation-expand-more"
         />
+        ]
         <Bitcoin inputTimeOne={inputTimeOne} percentLimitOne={percentLimitOne} inputTimeTwo={inputTimeTwo} percentLimitTwo={percentLimitTwo} resetLimitOne={this.resetLimitOne} resetLimitTwo={this.resetLimitTwo} />
         <br />
         <div className='input-container'>
@@ -99,6 +110,14 @@ class App extends React.Component {
             <p className="btcText">minutes, Condition Met.</p>
             <RaisedButton style={style.button} backgroundColor="#1E88E5" onClick={this.setLimitOne}
               label="Set" />
+            <RefreshIndicator
+              size={40}
+              left={10}
+              top={0}
+              status={this.state.refreshStatusOne}
+              style={style.refresh}
+              loadingColor="#76FF03"
+            />
 
           </div>
           <div className='secondConditional conditionals'>
@@ -124,7 +143,15 @@ class App extends React.Component {
             <p className="btcText">minutes, Condition Met.</p>
             <RaisedButton style={style.button} backgroundColor="#1E88E5" onClick={this.setLimitTwo}
               label="Set" />
-        
+            <RefreshIndicator
+              size={40}
+              left={10}
+              top={0}
+              status={this.state.refreshStatusTwo}
+              style={style.refresh}
+              loadingColor="#76FF03"
+            />
+
 
 
 
