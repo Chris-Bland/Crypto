@@ -49,14 +49,15 @@ class App extends React.Component {
     if (!this.props.loading) {
       const { percentChangeOne, percentChangeTwo } = this.props.bitcoin;
       const { percentLimitOne, percentLimitTwo } = nextProps;
+      const audio = new Audio('/alert.mp3');
 
       if (Math.abs(percentChangeOne) >= Math.abs(percentLimitOne) && !this.state.openOne) {
         this.setState({ openOne: true });
-        console.log("CONDITION ONE MET");
+        audio.play()
       }
       if (Math.abs(percentChangeTwo) >= Math.abs(percentLimitTwo) && !this.state.openTwo) {
         this.setState({ openTwo: true });
-        console.log('CONDITION TWO MET');
+        audio.play()
       }
     }
   }
@@ -74,6 +75,8 @@ class App extends React.Component {
         primary={true}
         onClick={this.handleCloseOne}
       />,
+       
+
     ];
     const actionsTwo = [
       <FlatButton
