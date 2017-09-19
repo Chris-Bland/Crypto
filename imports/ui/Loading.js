@@ -3,7 +3,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 
 const Loading = ({ children }) => (
   <div className='flexes flex-column justify-center align-center loading'>
-    <CircularProgress />
+     <img className="btcGif" src="./btc.gif" alt="Bitcoin"  />
   </div>
 )
 
