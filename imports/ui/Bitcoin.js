@@ -104,10 +104,10 @@ class App extends React.Component {
             <div className='btcTitle' >Limit Set</div>
             <div>{`${inputTimeOne} mins`}</div>
           </div>  */}
-          <div className='info-item'>
+          {/* <div className='info-item'>
             <div className='btcTitle'>Percent Moved</div>
             <div>{numeral(percentChangeOne).format('0.00%')}</div>
-          </div> 
+          </div>  */}
         </div>
         <Dialog
           title={`Condition One Has Met, BTC moved greater than: ${numeral(percentLimitOne).format('0.00%')}`}
