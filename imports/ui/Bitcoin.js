@@ -88,10 +88,8 @@ class App extends React.Component {
 
     return (
       <div className='bitcoin-container'>
-        <div className="header">
-          <img className="btcGif" src="./btc.gif" alt="Bitcoin"  />
+        <div className="header"> 
           <h1>Bitcoin</h1>
-          <img className="btcGif" src="./btc.gif" alt="Bitcoin"  />
         </div>
         <div className={`info-container ${movedColor}`}>
           <div className='info-item'>
