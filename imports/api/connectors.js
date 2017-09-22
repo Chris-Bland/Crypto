@@ -57,7 +57,7 @@ const Bitcoin = {
       });
     })
 
-    const { averagePrice, percentChangeOne, percentChangeTwo } = historicRates;
+    const { averagePrice, percentChangeOne, percentChangeTwo} = historicRates;
 
     return {
       price: ticker.price,

@@ -10,6 +10,7 @@ export const typeDefs = [`
     percentChangeTwo: Float
   }
 
+
   type RootQuery {
     bitcoin(inputTimeOne: Int!, inputTimeTwo: Int!): Bitcoin
   }

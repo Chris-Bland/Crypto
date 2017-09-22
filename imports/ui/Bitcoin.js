@@ -65,9 +65,10 @@ class App extends React.Component {
   render() {
     if (this.props.loading) return (<Loading />)
 
-    const { averagePrice, inputTimeOne, percentChangeOne, inputTimeTwo, percentChangeTwo, price } = this.props.bitcoin;
+    const { averagePrice, inputTimeOne, percentChangeOne, inputTimeTwo, percentChangeTwo, price} = this.props.bitcoin;
     const { percentLimitOne, percentLimitTwo } = this.props
     const movedColor = percentChangeOne > 0 ? 'green' : 'red';
+    console.log('PROPSA', this.props)
 
     const actionsOne = [
       <FlatButton
